@@ -77,7 +77,7 @@ const LocationInput = ({ onLocationChange }) => {
       <Input
         type="text"
         placeholder="Enter your location"
-        size="lg"
+        variant="underlined"
         value={inputValue}
         onChange={handleInputChange}
       />
