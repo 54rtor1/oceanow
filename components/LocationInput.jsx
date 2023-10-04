@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import {Input} from "@nextui-org/react";
 
 const LocationInput = ({ onLocationChange }) => {
   const router = useRouter();
@@ -67,7 +68,7 @@ const LocationInput = ({ onLocationChange }) => {
 
   return (
     <div>
-      <input
+      <Input
         type="text"
         placeholder="Enter your location"
         value={inputValue}

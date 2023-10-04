@@ -10,9 +10,9 @@ const Home = () => {
   return (
     <div>
       <Head>
-        <title>Next.js Landing Page with p5.js Animation</title>
+        <title>Oceanow</title>
       </Head>
-      <h1>Next.js Landing Page with p5.js Animation</h1>
+      <h1>Where would you like to swim?</h1>
       <LocationInput onLocationChange={handleLocationChange} />
     </div>
   );
