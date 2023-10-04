@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import {Input} from "@nextui-org/react";
+import {
+  Listbox,
+  ListboxSection,
+  ListboxItem
+} from "@nextui-org/react";
+
 
 const LocationInput = ({ onLocationChange }) => {
   const router = useRouter();
@@ -71,16 +77,22 @@ const LocationInput = ({ onLocationChange }) => {
       <Input
         type="text"
         placeholder="Enter your location"
+        size="lg"
         value={inputValue}
         onChange={handleInputChange}
       />
-      <ul>
+       <Listbox
+          aria-label="Single selection example"
+          variant="flat"
+          disallowEmptySelection
+          selectionMode="single"
+        >
         {suggestions.map((suggestion, index) => (
-          <li key={index} onClick={() => handleLocationSelect(suggestion)}>
+          <ListboxItem key={index} onClick={() => handleLocationSelect(suggestion)}>
             {suggestion.description}
-          </li>
+          </ListboxItem>
         ))}
-      </ul>
+        </Listbox>
     </div>
   );
 };

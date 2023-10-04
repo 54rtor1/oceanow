@@ -8,12 +8,14 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="flex items-center justify-center h-screen">
       <Head>
         <title>Oceanow</title>
       </Head>
-      <h1>Where would you like to swim?</h1>
-      <LocationInput onLocationChange={handleLocationChange} />
+      <div className='min-w-[50%] min-h-[50%]'>
+      <h1 className='font-serif title-quest'>Where would you like to swim?</h1>
+        <LocationInput onLocationChange={handleLocationChange} />
+      </div>
     </div>
   );
 };
