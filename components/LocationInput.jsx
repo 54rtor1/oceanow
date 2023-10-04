@@ -1,0 +1,87 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+
+const LocationInput = ({ onLocationChange }) => {
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const handleLocationSelect = (selectedLocation) => {
+    setInputValue(selectedLocation.description);
+
+    // Extract place_id from the selected suggestion
+    const placeId = selectedLocation.place_id;
+
+    // Make an HTTP request to get the geocode coordinates
+    axios
+      .get(`/api/geocode?placeId=${placeId}`)
+      .then((response) => {
+        const { lat, lng } = response.data;
+
+        // Pass the geocode coordinates to the parent component
+        onLocationChange({ latitude: lat, longitude: lng });
+
+        // Navigate to /oceanow with query parameters
+        router.push({
+          pathname: '/oceanow',
+          query: { lat, lng },
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching geocode data:', error);
+      });
+
+    setSuggestions([]);
+  };
+
+  useEffect(() => {
+    if (inputValue.trim() === '') {
+      setSuggestions([]);
+      return;
+    }
+
+    // Make an HTTP request to fetch location suggestions
+    axios
+      .get(`/api/places?input=${encodeURIComponent(inputValue)}`)
+      .then((response) => {
+        const data = response.data;
+
+        const suggestions = data.predictions.map((prediction) => ({
+          description: prediction.description,
+          place_id: prediction.place_id,
+        }));
+
+        setSuggestions(suggestions);
+      })
+      .catch((error) => {
+        console.error('Error fetching location suggestions:', error);
+        setSuggestions([]);
+      });
+  }, [inputValue]);
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Enter your location"
+        value={inputValue}
+        onChange={handleInputChange}
+      />
+      <ul>
+        {suggestions.map((suggestion, index) => (
+          <li key={index} onClick={() => handleLocationSelect(suggestion)}>
+            {suggestion.description}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default LocationInput;
