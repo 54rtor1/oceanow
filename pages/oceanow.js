@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import p5 from 'p5';
 import { sketch } from '../public/animation'; // Import your sketch function
 import { useRouter } from 'next/router';
@@ -11,12 +11,16 @@ export default function AnimationPage() {
   const [currentTime, setCurrentTime] = useState(null);
   const [timezone, setTimezone] = useState(null);
   const [displayedHour, setDisplayedHour] = useState(null);
+  const sketchRef = useRef(null); // Ref to store p5 instance
 
   useEffect(() => {
     const container = document.getElementById('p5-container');
 
-    // Create a p5.js instance and attach it to the container element
-    new p5(sketch, container);
+    // Check if the sketch has not been created yet
+    if (!sketchRef.current) {
+      // Create a p5.js instance and attach it to the container element
+      sketchRef.current = new p5(sketch, container);
+    }
 
     // Fetch wave height data from the OpenMeteo API using lat and lng
     if (lat && lng) {
