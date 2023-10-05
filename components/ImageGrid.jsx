@@ -18,7 +18,7 @@ const ImageGrid = () => {
         return (
           <div
             key={index}
-            className="relative overflow-hidden group animate-float brightness-100 saturation-200 opacity-50"
+            className="relative overflow-hidden group animate-float brightness-100 saturation-200 opacity-20"
             style={{ animationDuration: `${animationDuration}s`, animationDelay: `${animationDelay}s` }}
             onMouseMove={(event) => handlePointerMove(event, index)}
           >
