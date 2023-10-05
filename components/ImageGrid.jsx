@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import imageUrls from './imageData'; // Adjust the path accordingly
 
 const ImageTrail = () => {
-  const [imageIndex, setImageIndex] = useState(0);
+  const [trailIndex, setTrailIndex] = useState(0);
   const [imageTrail, setImageTrail] = useState([]);
   const containerRef = useRef(null);
 
@@ -18,8 +18,8 @@ const ImageTrail = () => {
       },
     ]);
 
-    // Increment the image index to display the next image
-    setImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
+    // Increment the trail index to cycle through imageUrls
+    setTrailIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
   };
 
   useEffect(() => {
@@ -44,9 +44,9 @@ const ImageTrail = () => {
           style={{ top: position.top, left: position.left }}
         >
           <div className="aspect-w-1 aspect-h-1">
-            {/* Use the imported imageUrls array */}
+            {/* Use the trail index to cycle through imageUrls */}
             <img
-              src={imageUrls[imageIndex]}
+              src={imageUrls[(trailIndex + index) % imageUrls.length]}
               alt={`Image ${index}`}
               className="object-cover w-full h-full"
             />
