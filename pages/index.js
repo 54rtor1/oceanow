@@ -9,7 +9,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen relative overflow-hidden">
+    <div className="flex items-center justify-center h-screen relative overflow-hidden pt-20">
       <Head>
         <title>Oceanow</title>
       </Head>
