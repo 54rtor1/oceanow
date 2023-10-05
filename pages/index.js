@@ -21,8 +21,10 @@ const Home = () => {
         />
       </AnimatePresence>
       <div className="min-w-[50%] min-h-[50%] z-10">
-      <h1 className='font-serif title-quest'>Where would you like to swim?</h1>
+        <div className="wrapper">
+        <h1 className='title-quest'>Where would you like to swim?</h1>
         <LocationInput onLocationChange={handleLocationChange} />
+        </div>
       </div>
     </div>
   );

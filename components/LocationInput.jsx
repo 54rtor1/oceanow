@@ -82,6 +82,7 @@ const LocationInput = ({ onLocationChange }) => {
         value={inputValue}
         onChange={handleInputChange}
       />
+      <div className="box-suggestions">
        <Listbox
           aria-label="Single selection example"
           variant="flat"
@@ -94,6 +95,7 @@ const LocationInput = ({ onLocationChange }) => {
           </ListboxItem>
         ))}
         </Listbox>
+      </div>
     </div>
   );
 };
