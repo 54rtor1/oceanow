@@ -57,6 +57,11 @@ export default function AnimationPage() {
     }
   }, [lat, lng]);
 
+  console.log('Wave Height:', waveHeight);
+  console.log('Current Time:', currentTime);
+  console.log('Timezone:', timezone);
+  console.log('Displayed Hour:', displayedHour);
+
   return (
     <div>
       <div id="p5-container"></div>
