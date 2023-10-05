@@ -1,59 +1,56 @@
-import React, { useRef, useState, useEffect } from 'react';
-import imageUrls from './imageData'; // Adjust the path accordingly
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import imageUrls from './imageData';
 
 const ImageTrail = () => {
-  const [trailIndex, setTrailIndex] = useState(0);
   const [imageTrail, setImageTrail] = useState([]);
-  const containerRef = useRef(null);
-
-  const handlePointerMove = (event) => {
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
-
-    setImageTrail((prevTrail) => [
-      ...prevTrail,
-      {
-        top: mouseY - 25, // Adjust as needed
-        left: mouseX - 25, // Adjust as needed
-      },
-    ]);
-
-    // Increment the trail index to cycle through imageUrls
-    setTrailIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
-  };
 
   useEffect(() => {
-    // Clear the trail after a short delay
-    const timeoutId = setTimeout(() => {
-      setImageTrail([]);
-    }, 1000); // Adjust as needed
+    const handlePointerMove = (event) => {
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
 
-    return () => clearTimeout(timeoutId);
-  }, []); // No dependency on imageTrail
+      setImageTrail((prevTrail) => [
+        ...prevTrail,
+        {
+          top: mouseY - 25, // Adjust as needed
+          left: mouseX - 25, // Adjust as needed
+        },
+      ]);
+    };
+
+    const clearImageTrail = () => {
+      setImageTrail([]);
+    };
+
+    document.addEventListener('mousemove', handlePointerMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handlePointerMove);
+    };
+  }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 overflow-hidden"
-      onMouseMove={handlePointerMove}
-    >
+    <motion.div>
       {imageTrail.map((position, index) => (
-        <div
+        <motion.div
           key={index}
-          className="absolute w-50 h-50 transform transition-transform duration-300"
+          className="absolute w-50 h-50"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 0, opacity: 0, transition: { duration: 0.5 } }}
           style={{ top: position.top, left: position.left }}
         >
           <div className="aspect-w-1 aspect-h-1">
-            {/* Use the trail index to cycle through imageUrls */}
             <img
-              src={imageUrls[(trailIndex + index) % imageUrls.length]}
+              src={imageUrls[index % imageUrls.length]}
               alt={`Image ${index}`}
               className="object-cover w-full h-full"
             />
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 

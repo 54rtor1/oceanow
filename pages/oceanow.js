@@ -3,6 +3,7 @@ import p5 from 'p5';
 import { sketch } from '../public/animation'; // Import your sketch function
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 export default function AnimationPage() {
   const router = useRouter();
@@ -63,14 +64,17 @@ export default function AnimationPage() {
   console.log('Displayed Hour:', displayedHour);
 
   return (
-    <div>
-      <div id="p5-container"></div>
-      {timezone && (
+    <motion.div
+      initial={{ scale: 0 }} // Initial scale set to 0
+      animate={{ scale: 1 }} // Animate to scale 1
+      exit={{ scale: 0 }} // Animate to scale 0 when exiting
+    >
+      <div id="p5-container">{timezone && (
         <h1>Current Time in {timezone}: {currentTime}</h1>
       )}
       {displayedHour !== null && waveHeight !== null && (
         <h2>Wave Height at {displayedHour}h: {waveHeight} meters</h2>
-      )}
-    </div>
+      )}</div>
+    </motion.div>
   );
 }

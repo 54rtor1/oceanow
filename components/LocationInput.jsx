@@ -38,6 +38,7 @@ const LocationInput = ({ onLocationChange }) => {
         router.push({
           pathname: '/oceanow',
           query: { lat, lng },
+          shallow: false,
         });
       })
       .catch((error) => {

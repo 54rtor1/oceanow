@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import LocationInput from '../components/LocationInput';
 import ImageTrail from '../components/ImageTrail';
+import { AnimatePresence } from 'framer-motion';
 
 const Home = () => {
   const handleLocationChange = (locationData) => {
@@ -13,13 +14,19 @@ const Home = () => {
       <Head>
         <title>Oceanow</title>
       </Head>
-      <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
-      <div className='min-w-[50%] min-h-[50%] z-10'>
-        <h1 className='font-serif title-quest'>Where would you like to swim?</h1>
+      <AnimatePresence exitBeforeEnter={false}>
+        <ImageTrail
+          key="imageTrail" // Ensure a unique key when animating
+          style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }}
+        />
+      </AnimatePresence>
+      <div className="min-w-[50%] min-h-[50%] z-10">
+      <h1 className='font-serif title-quest'>Where would you like to swim?</h1>
         <LocationInput onLocationChange={handleLocationChange} />
       </div>
     </div>
   );
+
 };
 
 export default Home;
