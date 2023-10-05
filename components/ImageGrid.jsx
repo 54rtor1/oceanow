@@ -29,7 +29,7 @@ const ImageTrail = () => {
     }, 1000); // Adjust as needed
 
     return () => clearTimeout(timeoutId);
-  }, [imageTrail]);
+  }, []); // No dependency on imageTrail
 
   return (
     <div
