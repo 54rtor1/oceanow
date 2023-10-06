@@ -18,7 +18,6 @@ const LocationInput = ({ onLocationChange }) => {
     const value = e.target.value;
     setInputValue(value);
   };
-
   const handleLocationSelect = (selectedLocation) => {
     setInputValue(selectedLocation.description);
 
@@ -34,12 +33,7 @@ const LocationInput = ({ onLocationChange }) => {
         // Pass the geocode coordinates to the parent component
         onLocationChange({ latitude: lat, longitude: lng });
 
-        // Navigate to /oceanow with query parameters
-        router.push({
-          pathname: '/oceanow',
-          query: { lat, lng },
-          shallow: false,
-        });
+        // Do not navigate to /oceanow, as per your requirement
       })
       .catch((error) => {
         console.error('Error fetching geocode data:', error);

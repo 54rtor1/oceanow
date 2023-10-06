@@ -1,12 +1,21 @@
+
 import Head from 'next/head';
 import LocationInput from '../components/LocationInput';
 import ImageTrail from '../components/ImageTrail';
-import { AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import OceanowComponent from '../components/OceanowComponent.jsx';
 
 const Home = () => {
+  const [locationData, setLocationData] = useState(null);
+  const [showOceanow, setShowOceanow] = useState(false);
+
   const handleLocationChange = (locationData) => {
-    // Handle the location data, e.g., update state or make API requests
-    console.log('Location Data:', locationData);
+    setLocationData(locationData);
+    setShowOceanow(true);
+  };
+
+  const removeOceanowComponent = () => {
+    setShowOceanow(false);
   };
 
   return (
@@ -14,21 +23,16 @@ const Home = () => {
       <Head>
         <title>Oceanow</title>
       </Head>
-      <AnimatePresence exitBeforeEnter={false}>
-        <ImageTrail
-          key="imageTrail" // Ensure a unique key when animating
-          style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }}
-        />
-      </AnimatePresence>
+      <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
       <div className="min-w-[50%] min-h-[50%] z-10">
         <div className="wrapper">
-        <h1 className='title-quest'>Where would you like to swim?</h1>
-        <LocationInput onLocationChange={handleLocationChange} />
+          <h1 className='title-quest'>Where would you like to swim?</h1>
+          <LocationInput onLocationChange={handleLocationChange} />
         </div>
       </div>
+      {showOceanow && <OceanowComponent lat={locationData?.latitude} lng={locationData?.longitude} onClose={removeOceanowComponent} />}
     </div>
   );
-
 };
 
 export default Home;

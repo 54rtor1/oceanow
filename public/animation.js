@@ -1,4 +1,4 @@
-export function sketch(p) {
+export default function sketch(p) {
   let waveHeight;
   let time = 0;
   let decayFactor = 1;
