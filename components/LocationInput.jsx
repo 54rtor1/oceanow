@@ -73,15 +73,18 @@ const LocationInput = ({ onLocationChange }) => {
         type="text"
         placeholder="Enter your location"
         variant="underlined"
+        className="text-white"
+        color="primary"
         value={inputValue}
         onChange={handleInputChange}
       />
       <div className="box-suggestions">
        <Listbox
           aria-label="Single selection example"
-          variant="flat"
+          variant="light"
           disallowEmptySelection
           selectionMode="single"
+          className="text-white"
         >
         {suggestions.map((suggestion, index) => (
           <ListboxItem key={index} onClick={() => handleLocationSelect(suggestion)}>
