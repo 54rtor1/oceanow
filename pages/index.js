@@ -1,10 +1,10 @@
 // pages/index.jsx
 import Head from 'next/head';
-import ImageTrail from '../components/ImageTrail';
+import ImageTrail from '../components/ui/ImageTrail';
 import { useState } from 'react';
 import Geolocation from '../components/Geolocation';
 import LocationContent from '../components/LocationContent';
-import OceanowComponent from '../components/OceanowComponent.jsx';
+import CurrentData from '../components/CurrentData.jsx';
 
 const Home = () => {
   const [locationData, setLocationData] = useState(null);
@@ -23,7 +23,7 @@ const Home = () => {
     }
   };
 
-  const removeOceanowComponent = () => {
+  const removeCurrentData = () => {
     setShowOceanow(false);
   };
 
@@ -52,7 +52,7 @@ const Home = () => {
           />
         )}
       </div>
-      {showOceanow && <OceanowComponent lat={locationData?.latitude} lng={locationData?.longitude} onClose={removeOceanowComponent} />}
+      {showOceanow && <CurrentData lat={locationData?.latitude} lng={locationData?.longitude} onClose={removeCurrentData} />}
     </div>
   );
 };

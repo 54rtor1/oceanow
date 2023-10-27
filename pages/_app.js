@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import { NextUIProvider } from "@nextui-org/react";
 import { motion, AnimatePresence } from 'framer-motion';
-import Noise from '../components/Noise';
+import Noise from '../components/ui/Noise';
 
 const pageVariants = {
   pageInitial: {
