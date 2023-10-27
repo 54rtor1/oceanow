@@ -1,4 +1,3 @@
-
 import Head from 'next/head';
 import LocationInput from '../components/LocationInput';
 import ImageTrail from '../components/ImageTrail';
@@ -8,6 +7,25 @@ import OceanowComponent from '../components/OceanowComponent.jsx';
 const Home = () => {
   const [locationData, setLocationData] = useState(null);
   const [showOceanow, setShowOceanow] = useState(false);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocationData({ latitude, longitude });
+          setShowOceanow(true);
+        },
+        (error) => {
+          console.error('Geolocation error:', error.message);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+        }
+      );
+    }
+  }, []);
 
   const handleLocationChange = (locationData) => {
     setLocationData(locationData);
@@ -26,8 +44,16 @@ const Home = () => {
       <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
       <div className="min-w-[50%] min-h-[50%] z-10">
         <div className="wrapper">
-          <h1 className='title-quest'>Where would you like to swim?</h1>
-          <LocationInput onLocationChange={handleLocationChange} />
+          {/* Step 3: Dynamically render the message or LocationInput based on locationData */}
+          {locationData ? (
+            <h1 className='title-quest'>Would you like to swim near {locationData.latitude}, {locationData.longitude}?</h1>
+          ) : (
+            <div>
+              <h1 className='title-quest'>Where would you like to swim?</h1>
+              {/* Step 2: Pass handleLocationChange as a callback to LocationInput */}
+              <LocationInput onLocationChange={handleLocationChange} />
+            </div>
+          )}
         </div>
       </div>
       {showOceanow && <OceanowComponent lat={locationData?.latitude} lng={locationData?.longitude} onClose={removeOceanowComponent} />}
