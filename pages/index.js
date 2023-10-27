@@ -32,7 +32,7 @@ const Home = () => {
       <Head>
         <title>Oceanow</title>
       </Head>
-      <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
+      {/* <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} /> */}
       <div className="min-w-[50%] min-h-[50%] z-10">
         <Geolocation onGeolocationSuccess={handleGeolocationSuccess} onGeolocationError={handleGeolocationError} />
         <LocationContent locationData={locationData} onLocationChange={handleLocationChange} />
