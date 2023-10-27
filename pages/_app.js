@@ -2,6 +2,7 @@ import '@/styles/globals.css';
 import { NextUIProvider } from "@nextui-org/react";
 import { motion, AnimatePresence } from 'framer-motion';
 import Noise from '../components/ui/Noise';
+import ImageTrail from '../components/ui/ImageTrail';
 
 const pageVariants = {
   pageInitial: {
@@ -38,10 +39,12 @@ export default function App({ Component, pageProps, router }) {
             exit="pageExit"
             variants={pageVariants}
           >
+           {/* <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} /> */}
+          <Noise style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
+
             <Component {...pageProps} />
           </motion.div>
         </AnimatePresence>
-        <Noise style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
       </div>
     </NextUIProvider>
   );
