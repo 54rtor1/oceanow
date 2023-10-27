@@ -1,10 +1,26 @@
+// components/LocationContent.js
 import LocationInput from './LocationInput';
 
-const LocationContent = ({ locationData, onLocationChange }) => {
+const LocationContent = ({ locationData, onLocationChange, onConfirmation }) => {
+  const handleConfirm = () => {
+    onConfirmation(true);
+  };
+
+  const handleReject = () => {
+    onConfirmation(false);
+    onLocationChange(null); // Set locationData to null
+  };
+
   return (
-    <div className="wrapper">
+    <div className="wrapper p-8 text-center">
       {locationData ? (
-        <h1 className='title-quest'>Would you like to swim near {locationData.latitude}, {locationData.longitude}?</h1>
+        <div>
+          <h1 className='title-quest'>Would you like to swim near {locationData.latitude}, {locationData.longitude}?</h1>
+          <div>
+            <button onClick={handleConfirm}>Yes</button>
+            <button onClick={handleReject}>No</button>
+          </div>
+        </div>
       ) : (
         <div>
           <h1 className='title-quest'>Where would you like to swim?</h1>

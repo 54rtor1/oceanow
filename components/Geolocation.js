@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 
 const Geolocation = ({ onGeolocationSuccess, onGeolocationError }) => {
+  const [hasRequested, setHasRequested] = useState(false);
+
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && !hasRequested) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -17,8 +19,10 @@ const Geolocation = ({ onGeolocationSuccess, onGeolocationError }) => {
           timeout: 5000,
         }
       );
+
+      setHasRequested(true);
     }
-  }, [onGeolocationSuccess, onGeolocationError]);
+  }, [hasRequested, onGeolocationSuccess, onGeolocationError]);
 
   return null;
 };

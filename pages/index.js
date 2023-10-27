@@ -1,3 +1,4 @@
+// pages/index.jsx
 import Head from 'next/head';
 import ImageTrail from '../components/ImageTrail';
 import { useState } from 'react';
@@ -8,10 +9,18 @@ import OceanowComponent from '../components/OceanowComponent.jsx';
 const Home = () => {
   const [locationData, setLocationData] = useState(null);
   const [showOceanow, setShowOceanow] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleLocationChange = (locationData) => {
     setLocationData(locationData);
-    setShowOceanow(true);
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmation = (confirmed) => {
+    setShowConfirmation(false);
+    if (confirmed) {
+      setShowOceanow(true);
+    }
   };
 
   const removeOceanowComponent = () => {
@@ -20,11 +29,11 @@ const Home = () => {
 
   const handleGeolocationSuccess = (coords) => {
     setLocationData(coords);
-    setShowOceanow(true);
+    setShowConfirmation(true); // Automatically show confirmation on GPS permission
   };
 
   const handleGeolocationError = () => {
-    // add handle error
+    setShowConfirmation(true);
   };
 
   return (
@@ -35,7 +44,13 @@ const Home = () => {
       {/* <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} /> */}
       <div className="min-w-[50%] min-h-[50%] z-10">
         <Geolocation onGeolocationSuccess={handleGeolocationSuccess} onGeolocationError={handleGeolocationError} />
-        <LocationContent locationData={locationData} onLocationChange={handleLocationChange} />
+        {(showConfirmation || !locationData) && (
+          <LocationContent
+            locationData={locationData}
+            onLocationChange={handleLocationChange}
+            onConfirmation={handleConfirmation}
+          />
+        )}
       </div>
       {showOceanow && <OceanowComponent lat={locationData?.latitude} lng={locationData?.longitude} onClose={removeOceanowComponent} />}
     </div>
