@@ -13,8 +13,8 @@ export default function sketch(p) {
   let waveDirection = 1;
 
   p.setup = function () {
-    const canvasWidth = window.innerWidth;
-    const canvasHeight = window.innerHeight;
+    const canvasWidth = 800;
+    const canvasHeight = 390;
     p.createCanvas(canvasWidth, canvasHeight, p.WEBGL); // Use WEBGL renderer
     waveHeight = 200; // Initial value, will be updated dynamically
     seaFillHeight = waveHeight; // Initialize seaFillHeight

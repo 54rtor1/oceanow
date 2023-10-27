@@ -1,14 +1,13 @@
-// pages/index.jsx
 import Head from 'next/head';
-import ImageTrail from '../components/ui/ImageTrail';
 import { useState } from 'react';
 import Geolocation from '../components/Geolocation';
 import LocationContent from '../components/LocationContent';
 import CurrentData from '../components/CurrentData.jsx';
+import { useRouter } from 'next/router';
 
 const Home = () => {
+  const router = useRouter();
   const [locationData, setLocationData] = useState(null);
-  const [showOceanow, setShowOceanow] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleLocationChange = (locationData) => {
@@ -19,17 +18,19 @@ const Home = () => {
   const handleConfirmation = (confirmed) => {
     setShowConfirmation(false);
     if (confirmed) {
-      setShowOceanow(true);
+      router.push({
+        pathname: '/current',
+        query: {
+          lat: locationData?.latitude,
+          lng: locationData?.longitude,
+        },
+      });
     }
-  };
-
-  const removeCurrentData = () => {
-    setShowOceanow(false);
   };
 
   const handleGeolocationSuccess = (coords) => {
     setLocationData(coords);
-    setShowConfirmation(true); // Automatically show confirmation on GPS permission
+    setShowConfirmation(true);
   };
 
   const handleGeolocationError = () => {
@@ -41,7 +42,6 @@ const Home = () => {
       <Head>
         <title>Oceanow</title>
       </Head>
-      {/* <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} /> */}
       <div className="min-w-[50%] min-h-[50%] z-10">
         <Geolocation onGeolocationSuccess={handleGeolocationSuccess} onGeolocationError={handleGeolocationError} />
         {(showConfirmation || !locationData) && (
@@ -52,7 +52,6 @@ const Home = () => {
           />
         )}
       </div>
-      {showOceanow && <CurrentData lat={locationData?.latitude} lng={locationData?.longitude} onClose={removeCurrentData} />}
     </div>
   );
 };
