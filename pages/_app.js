@@ -39,7 +39,7 @@ export default function App({ Component, pageProps, router }) {
             exit="pageExit"
             variants={pageVariants}
           >
-           {/* <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} /> */}
+           <ImageTrail style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
           <Noise style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
 
             <Component {...pageProps} />
